@@ -6,19 +6,32 @@
 #define PKT_INSTANCE_TYPE_INGRESS_CLONE 1
 #define PKT_INSTANCE_TYPE_EGRESS_CLONE 2
 
-const bit<8>  UDP_PROTOCOL = 0x11;
-const bit<16> TYPE_IPV4 = 0x800;
-const bit<16> TYPE_ARP =  0x0806;
-// const bit<6> TYPE_INT = 6w31;
-// const bit<16> TYPE_INT1 = 0x10E2;
-const bit<32> REPORT_MIRROR_SESSION_ID = 500;
-const bit<6> IPv4_DSCP_INT = 6w31;   // indicates an INT header in the packet
-const bit<16> INT_SHIM_HEADER_LEN_BYTES = 4;
-const bit<8> INT_TYPE_HOP_BY_HOP = 1;
-//const bit<16> HOP_MD_LEN_BYTES = 36;
-const bit<16> HOP_MD_LEN_BYTES = 40;
-//const bit<5> HOP_MD_WORDS = 9;
-const bit<5> HOP_MD_WORDS = 10;
+// const bit<8>  UDP_PROTOCOL = 0x11;
+// const bit<16> TYPE_IPV4 = 0X800;
+// // const bit<6> TYPE_INT = 6w31;
+// // const bit<16> TYPE_INT1 = 0x10E2;
+// const bit<32> REPORT_MIRROR_SESSION_ID = 500;
+// const bit<6> IPv4_DSCP_INT = 6w31;   // indicates an INT header in the packet
+// const bit<16> INT_SHIM_HEADER_LEN_BYTES = 4;
+// const bit<8> INT_TYPE_HOP_BY_HOP = 1;
+// //const bit<16> HOP_MD_LEN_BYTES = 36;
+// const bit<16> HOP_MD_LEN_BYTES = 40;
+// //const bit<5> HOP_MD_WORDS = 9;
+// const bit<5> HOP_MD_WORDS = 10;
+
+
+
+
+const bit<16> TYPE_IPV4 = 0x0800;
+const bit<16> TYPE_ARP  = 0x0806;
+
+// ARP RELATED CONST VARS
+const bit<16> ARP_HTYPE = 0x0001; //Ethernet Hardware type is 1
+const bit<16> ARP_PTYPE = TYPE_IPV4; //Protocol used for ARP is IPV4
+const bit<8>  ARP_HLEN  = 6; //Ethernet address size is 6 bytes
+const bit<8>  ARP_PLEN  = 4; //IP address size is 4 bytes
+const bit<16> ARP_REQ = 1; //Operation 1 is request
+const bit<16> ARP_REPLY = 2; //Operation 2 is reply
 
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
@@ -63,16 +76,16 @@ header ipv4_t {
 }
 
 header arp_t {
-    bit<16>  htype;      // HW type
-    bit<16>  ptype;      // Protocol type
-    bit<8>  hlen;       // HW addr len
-    bit<8>  plen;       // Protocol addr len
-    bit<16>  oper;       // Proto addr len
-    bit<48> srcMacAddr; // source mac addr
-    bit<32> srcIPAddr;  // source IP addr
-    bit<48> dstMacAddr; // destination mac addr
-    bit<32> dstIPAddr;  // destination IP addr
-}
+  bit<16>   h_type;
+  bit<16>   p_type;
+  bit<8>    h_len;
+  bit<8>    p_len;
+  bit<16>   op_code;
+  macAddr_t src_mac;
+  ip4Addr_t src_ip;
+  macAddr_t dst_mac;
+  ip4Addr_t dst_ip;
+  }
 
 
 header udp_t {
@@ -94,12 +107,12 @@ header switch_int_t {
 }
 
 struct metadata {
-    bit<8> id_src;
-    bit<8> id_dst;
-    }
+    //empty
+}
 
 struct headers {
     ethernet_t         ethernet;
+    arp_t              arp;
     ipv4_t             ipv4;
     // int_header_t       int_header;
 }
@@ -121,17 +134,18 @@ parser MyParser(packet_in packet,
     state parse_ethernet {
         packet.extract(hdr.ethernet);
         transition select(hdr.ethernet.etherType) {
-            TYPE_IPV4: parse_ipv4;
-            // TYPE_ARP: parse_arp;
-
-            default: accept;
+          TYPE_ARP: parse_arp;
+          TYPE_IPV4: parse_ipv4;
+          default: accept;
         }
     }
-    
-	// state parse_arp {
-	// 	packet.extract(hdr.arp);
-	// 	transition accept;
-	// }
+
+    state parse_arp {
+      packet.extract(hdr.arp);
+        transition select(hdr.arp.op_code) {
+          ARP_REQ: accept;
+      }
+    }
 
     state parse_ipv4 {
         packet.extract(hdr.ipv4);
@@ -161,57 +175,51 @@ control MyIngress(inout headers hdr,
     // counter(32w1, CounterType.packets) total_counter;
     // counter(32w1, CounterType.packets) fwd_counter;
 
+    // action ac_send_to_coordinator(egressSpec_t eif){
+    //     standard_metadata.egress_spec = eif;
+    // }
+
+    // table tb_swarm_control {
+    //     key = {
+    //         standard_metadata.ingress_port: exact;
+    //         hdr.ipv4.dstIP: exact;
+    //         // hdr.tcp.dst_port: ternary;
+    //     }
+    //     actions = {NoAction; ac_send_to_coordinator;}
+    // }
+
     action drop() {
         mark_to_drop(standard_metadata);
         exit;
     }
 
-    action ac_send_to_coordinator(egressSpec_t eif){
-        standard_metadata.egress_spec = eif;
-    }
 
-    /*
-    Merge with swarm ACL: 
-        this table plays the role of checking of blacklisted nodes.
-    */
-    table tb_swarm_control {
-        key = {
-            standard_metadata.ingress_port: exact;
-            hdr.ipv4.dstIP: exact;
-            // hdr.tcp.dst_port: ternary;
-        }
-        actions = {NoAction; ac_send_to_coordinator; drop;}
-    }
+    // //-------------------------------------------------------------//
+    // //--------- M U L T I C A S T  H A N D L I N G ----------------//
 
+    // action ac_set_mcast_grp (bit<16> mcast_grp) {
 
+    //     standard_metadata.mcast_grp = mcast_grp;
+    //     // See Section 6.4 of RFC 1112
+    //     hdr.ethernet.dstMac = 0xffffffffffff;
 
+    //     // The P4_16 |-| operator is a saturating operation, meaning
+    //     // that since the operands are unsigned integers, the result
+    //     // cannot wrap around below 0 back to the maximum possible
+    //     // value, the way the result of the - operator can.
+    //     hdr.ipv4.ttl = hdr.ipv4.ttl |-| 1;
+    // } 
 
-    //-------------------------------------------------------------//
-    //--------- M U L T I C A S T  H A N D L I N G ----------------//
-
-    action ac_set_mcast_grp (bit<16> mcast_grp) {
-
-        standard_metadata.mcast_grp = mcast_grp;
-        // See Section 6.4 of RFC 1112
-        hdr.ethernet.dstMac = 0xffffffffffff;
-
-        // The P4_16 |-| operator is a saturating operation, meaning
-        // that since the operands are unsigned integers, the result
-        // cannot wrap around below 0 back to the maximum possible
-        // value, the way the result of the - operator can.
-        hdr.ipv4.ttl = hdr.ipv4.ttl |-| 1;
-    } 
-
-    table tb_ipv4_mc_route_lookup {
-        key = {
-            hdr.ipv4.dstIP: lpm;
-        }
-        actions = {
-            ac_set_mcast_grp;
-            drop;
-        }
-        const default_action = drop;
-    }
+    // table tb_ipv4_mc_route_lookup {
+    //     key = {
+    //         hdr.ipv4.dstIP: lpm;
+    //     }
+    //     actions = {
+    //         ac_set_mcast_grp;
+    //         drop;
+    //     }
+    //     const default_action = drop;
+    // }
 
 
     //------------------------------------------------------//
@@ -271,66 +279,44 @@ control MyIngress(inout headers hdr,
         default_action = NoAction();
     }   
     
-
-
-    /* Merged with Swarm ACL:
-        Added tables to check IDs of source and destination nodes
-     */
-
-    action get_swarm_id_src(bit<8> id){
-        meta.id_src = id; 
-    }
-    action get_swarm_id_dst(bit<8> id){
-        meta.id_dst= id; 
-    }
-
-// Check the swarm id of src host
-    table tb_check_swarm_id_src{
-        key = {
-            hdr.ipv4.srcIP: lpm;
-        }
-        actions = {
-            get_swarm_id_src;
-            drop;
-        }
-        default_action = drop();
-        
-    }
-
-
-// Check the swarm id of dst host
-    table tb_check_swarm_id_dst{
-        key = {
-            hdr.ipv4.dstIP: lpm;
-        }
-        actions = {
-            get_swarm_id_dst;
-            drop;
-        }
-        default_action = drop();
-        
-    }
-
     //------------------------------------------------------//
     //------ I N G R E S S  P R O C E S S I N G ------------//
+
     apply {
-        if (hdr.ipv4.isValid()) {
-            if(tb_swarm_control.apply().hit){
-                exit;
-            }
-            tb_check_swarm_id_src.apply();
-            tb_check_swarm_id_dst.apply();
-            if (meta.id_dst != meta.id_src){
-                drop();
-            }
-            else if( !tb_ipv4_lpm.apply().hit){
-                tb_ipv4_mc_route_lookup.apply();
-            }
-        }
+        // if(tb_swarm_control.apply().hit){
+        //         exit;
+        // } 
+
+
+        if (hdr.ethernet.etherType == TYPE_ARP ) {
+            //update operation code from request to reply
+            hdr.arp.op_code = ARP_REPLY;
+            
+            //reply's dst_mac is the request's src mac
+            hdr.arp.dst_mac = hdr.arp.src_mac;
+            
+            //reply's dst_ip is the request's src ip
+            hdr.arp.src_mac = (bit<48>) hdr.arp.dst_ip;
+
+            //reply's src ip is the request's dst ip
+            hdr.arp.src_ip = hdr.arp.dst_ip;
+
+            //update ethernet header
+            hdr.ethernet.dstMac = hdr.ethernet.srcMac;
+            hdr.ethernet.srcMac = (bit<48>) hdr.arp.dst_ip;
+
+            //send it back to the same port
+            standard_metadata.egress_spec = standard_metadata.ingress_port;
+        } 
         else if (hdr.ethernet.isValid()){
             tb_l2_forward.apply();
         }
- 
+        else if (hdr.ipv4.isValid()) {
+            tb_ipv4_lpm.apply();
+            // if( !tb_ipv4_lpm.apply().hit){
+            //     tb_ipv4_mc_route_lookup.apply();
+            // }
+        } 
 
     } // END OF APPLY BLOCK
     
@@ -345,11 +331,11 @@ control MyEgress(inout headers hdr,
                  inout metadata meta,
                  inout standard_metadata_t standard_metadata) {
         apply{
-            // log_msg("ingress_port: {}, egress_port: {}", {standard_metadata.ingress_port, standard_metadata.egress_port });
+            log_msg("ingress_port: {}, egress_port: {}", {standard_metadata.ingress_port, standard_metadata.egress_port });
 
-            // if (standard_metadata.ingress_port == standard_metadata.egress_port) {
-            //     mark_to_drop(standard_metadata);
-            // }
+            if (standard_metadata.ingress_port == standard_metadata.egress_port && hdr.ethernet.etherType != TYPE_ARP) {
+                mark_to_drop(standard_metadata);
+            }
 
         }
 }
@@ -386,12 +372,8 @@ control MyComputeChecksum(inout headers hdr, inout metadata meta) {
 control MyDeparser(packet_out packet, in headers hdr) {
     apply {
         packet.emit(hdr.ethernet);
+        packet.emit(hdr.arp);
         packet.emit(hdr.ipv4);
-        // packet.emit(hdr.udp);
-        // packet.emit(hdr.shim);
-        // packet.emit(hdr.int_header);
-        // packet.emit(hdr.sw_data);
-        // packet.emit(hdr.sw_traces);
     }
 }
 

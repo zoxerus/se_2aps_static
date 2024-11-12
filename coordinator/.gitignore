@@ -1,5 +1,0 @@
-tests
-*.log
-__pycache__
-.venv
-video_demo

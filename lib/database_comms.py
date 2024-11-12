@@ -56,13 +56,12 @@ def get_node_swarm_mac_by_swarm_ip(database_type, session, node_swarm_ip):
         return result.one()[0]
 
 
-def update_db_with_joined_node(database_type, session, node_uuid, node_swarm_id):
     
+def update_db_with_left_node(database_type, session, node_swarm_id):
     if database_type == STR_DATABASE_TYPE_CASSANDRA:
         query = f"""UPDATE {db_defines.NAMEOF_DATABASE_SWARM_KEYSPACE}.{db_defines.NAMEOF_DATABASE_SWARM_TABLE_ACTIVE_NODES}
-        SET {db_defines.NAMEOF_DATABASE_FIELD_NODE_UUID} = '{node_uuid}', 
-        {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_STATUS} = '{db_defines.SWARM_STATUS.JOINED.value}'
-        WHERE {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_ID} = {node_swarm_id};
+        SET {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_STATUS} = '{db_defines.SWARM_STATUS.LEFT.value}'
+        WHERE {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_ID} = {node_swarm_id}  IF EXISTS;
         """
         return session.execute(query)
     
@@ -73,14 +72,24 @@ def insert_node_into_swarm_database(database_type, session, host_id, this_ap_id,
     {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_STATUS}, {db_defines.NAMEOF_DATABASE_FIELD_LAST_UPDATE_TIMESTAMP}, 
     {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_IP}, {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_MAC},
     {db_defines.NAMEOF_DATABASE_FIELD_NODE_PHYSICAL_MAC})
-    VALUES ({host_id}, '{this_ap_id}', '{db_defines.SWARM_STATUS.PENDING.value}', toTimeStamp(now() ),
-    '{node_vip}', '{node_vmac}', '{node_phy_mac}') IF NOT EXISTS;
+    VALUES ({host_id}, '{this_ap_id}', '{db_defines.SWARM_STATUS.JOINED.value}', toTimeStamp(now() ),
+    '{node_vip}', '{node_vmac}', '{node_phy_mac}');
     """
     session.execute(query)
 
 
-def get_next_available_host_id_from_swarm_table(database_typ, session, first_host_id, max_host_id):
-    if database_typ == STR_DATABASE_TYPE_CASSANDRA:    
+def get_next_available_host_id_from_swarm_table(database_typ, session, first_host_id, max_host_id, node_physical_mac):
+    if database_typ == STR_DATABASE_TYPE_CASSANDRA:
+        query=  f""" SELECT {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_ID} FROM 
+            {db_defines.NAMEOF_DATABASE_SWARM_KEYSPACE}.{db_defines.NAMEOF_DATABASE_SWARM_TABLE_ACTIVE_NODES}
+            WHERE {db_defines.NAMEOF_DATABASE_FIELD_NODE_PHYSICAL_MAC} = '{node_physical_mac}' ALLOW FILTERING
+            """
+        result = session.execute(query)            
+        print(result.one())
+        if result.one() != None:
+            print(result[0][0])
+            return result[0][0]
+        
         query = f""" SELECT {db_defines.NAMEOF_DATABASE_FIELD_NODE_SWARM_ID} FROM 
             {db_defines.NAMEOF_DATABASE_SWARM_KEYSPACE}.{db_defines.NAMEOF_DATABASE_SWARM_TABLE_ACTIVE_NODES}"""
         result = session.execute(query)

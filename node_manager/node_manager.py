@@ -101,13 +101,14 @@ def handle_connection():
                 swarmNode_config[STR_VXLAN_ID] = comm_buffer_as_word_array[1]
                 swarmNode_config[STR_VETH1_VIP] = comm_buffer_as_word_array[2]
                 swarmNode_config[STR_VETH1_VMAC] = comm_buffer_as_word_array[3]
-                swarmNode_config[STR_COORDINATOR_VIP] = comm_buffer_as_word_array[4]
-                swarmNode_config[STR_COORDINATOR_VMAC] = comm_buffer_as_word_array[5]
-                swarmNode_config[STR_COORDINATOR_TCP_PORT] = int(comm_buffer_as_word_array[6])
-                swarmNode_config[STR_AP_ID] = comm_buffer_as_word_array[7]
+                # swarmNode_config[STR_COORDINATOR_VIP] = comm_buffer_as_word_array[4]
+                # swarmNode_config[STR_COORDINATOR_VMAC] = comm_buffer_as_word_array[5]
+                # swarmNode_config[STR_COORDINATOR_TCP_PORT] = int(comm_buffer_as_word_array[6])
+                # swarmNode_config[STR_AP_ID] = comm_buffer_as_word_array[7]
                 swarmNode_config[STR_AP_IP] = ap_address[0]
                 try:
                     install_swarmNode_config()
+                    ap_socket.sendall(bytes( f"OK {NODE_UUID}".encode() ))
                 except Exception as e:
                     print(f'Error installing config: {e} Leaving Access Point' )
                     cli_command = f'nmcli connection show --active'
@@ -160,7 +161,6 @@ def install_swarmNode_config():
         f'nikss-ctl add-port pipe 0 dev vxlan{vxlan_id}',
         f'nikss-ctl table add pipe 0 ingress_route action id 2 key {if1_index.stdout} data {if2_index.stdout}',
         f'nikss-ctl table add pipe 0 ingress_route action id 2 key {if2_index.stdout} data {if1_index.stdout}',
-        f"arp -s {swarmNode_config[STR_COORDINATOR_VIP]} {swarmNode_config[STR_COORDINATOR_VMAC]} dev veth1" # THIS IS THE MAC OF THE COORDINATOR
     ]
     
     for command in commands:
@@ -168,14 +168,9 @@ def install_swarmNode_config():
         res = subprocess.run(command.split(), text=True  , stdout=subprocess.PIPE, stderr=subprocess.PIPE )
         print(res.stdout.strip(), '\n\n', res.stderr.strip()  )
     
-    join_request_data = f"Join_Request {last_request_id} {NODE_UUID} {swarmNode_config[STR_VXLAN_ID]} {swarmNode_config[STR_VETH1_VIP]} {swarmNode_config[STR_VETH1_VMAC]} {swarmNode_config[STR_AP_ID]}"
-    last_request_id = last_request_id + 1
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as coordinator_socket:
-        print(f'connecting to {swarmNode_config[STR_COORDINATOR_VIP]}:{swarmNode_config[STR_COORDINATOR_TCP_PORT]}')
-        coordinator_socket.settimeout(5)
-        coordinator_socket.connect((swarmNode_config[STR_COORDINATOR_VIP], swarmNode_config[STR_COORDINATOR_TCP_PORT] ))
-        coordinator_socket.sendall(bytes( join_request_data.encode() ))
-        print(f'sent {join_request_data} to coordinator')
+    # join_request_data = f"Join_Request {last_request_id} {NODE_UUID} {swarmNode_config[STR_VXLAN_ID]} {swarmNode_config[STR_VETH1_VIP]} {swarmNode_config[STR_VETH1_VMAC]} {swarmNode_config[STR_AP_ID]}"
+    # last_request_id = last_request_id + 1
+
 
 def exit_handler():
     logger.info('Handling exit')

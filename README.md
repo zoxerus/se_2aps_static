@@ -1,7 +1,3 @@
-This code has been tested or Raspberry Pi 5 devices and is comprised of three parts: 
-1. Access Point Manager: runs in the RPi5 devices that are meant to act as Access Point, it monitors new nodes joining the wifi network, and inserts their details in the swarm database, and assigns swarm IDs.
-2. Coordinator: it handles join and leave requests from the nodes in the swarm, and it install the forwarding entries in the AP P4 switch to handle traffic routing.
-3. Node Manager: when the node joins an AP, the node manager recieves the swarm configuration from the AP Manager, and then forms and sends a join request to the coordinator.
 
 # Requirements
 1. in the RPi5 devices that are meant to work as Access Points:
@@ -19,31 +15,10 @@ This code has been tested or Raspberry Pi 5 devices and is comprised of three pa
    - Install the required python modules: `pip install psutil aenum cassandra-driver`
 2. In the RPi5 devices that are meant to work as swarm nodes:
    -  download and install the NIKSS switch, follow instructions on the link: https://github.com/NIKSS-vSwitch/nikss
-3. In the device that is meant to work as a coordinator:
-   - install the bmv2 docker container `docker pull p4lang/pi`
-   - install the cassandra docker container `docker pull cassandra`
-   - create a virtual python environment inside the folder ./ap_manager/client_monitor `python3 -m venv .venv`
-   - source the new environment `source ./.venv/bin/activate`
-   - install python modules `pip install aenum cassandra-driver`
   
 # Configuring the Network
-1. create an overlay vxlan network to connect the coordinator and the access points, here I am using the 192.168.100.0 subnet:
-   the following lines should be run on each one of the access points, as well as the coordinator, replace x wit a number in  the second line
-   ```
-      sudo ip link add smartedge-bb type vxlan id 1000 dev eth0 group 239.255.1.1 dstport 4789
-      sudo ip address add 192.168.100.x/24 dev smartedge-bb
-      sudo ip link set dev smartedge-bb up
-   ```
-   for the coordinator, add as well a swarm virtual ip to the smartedge-bb interface:
-   ```
-   sudo ip address add 192.168.10.1/24 dev smartedge-bb
-   ```
-3. Configure loopback addresses on APs and Nodes, consult the files /ap_manager/client_monitor/config.py and /node_manager/config.py for instructions on how to do so
-4. in the respective config.py files mentioned in step 1, configure the default_wlan_interface to point to the wifi device name.
-5. In the global config file /lib/config.py configure the list ap_list with names, mac, and ip addresses of the access points in the network for example.
-6. In the global config file set the ip where the database is hosted by setting the variabla database_hostname and database_port
-7. In the global config file set the IP where the coordinator is located by setting the variables coordinator_physical_ip and coordinator_mac
-8. In the global config file set the variables this_swarm_subnet and coordinator_vip (you can also keep the default values )
+All required config is moved to the  /lib/global_config file
+
 
 # Starting the Network
 1. Clone the Repo to the devices meant to work as Access Points and set the config as in the section Congifuring the Network
@@ -53,10 +28,7 @@ This code has been tested or Raspberry Pi 5 devices and is comprised of three pa
    cd ./ap_manager/client_monitor
    . ./run.sh
    ```
-4. Clone the repo to the coordinator device and se the config as in the section Configuring the Network
-5. Start the bmv2 in the coordinator by running the file ./coordinator/start_bmv2.sh
-6. Start the database in the coordinator by running the file ./coordinator/start_cassandra_docker.sh
-7. Start the coordinator by sourcing the file run.sh for example `. ./run.sh`
-8. Clone the repo to the devices meant to work as swarm nodes and set the config as in the section Configuring the Network.
-9. Start the node_manager by source the file ./node_manager/run.sh for example `. ./run.sh`
-10. Connect the swarm node to one of the APs by using the command `nmcli dev wifi connect R1AP password 123456123 ifname wlan0`
+4. Start a cassandra database 
+
+5. Start the node_manager by source the file ./node_manager/run.sh for example `. ./run.sh`
+6. Connect the swarm node to one of the APs by using the command `nmcli dev wifi connect R1AP password 123456123 ifname wlan0`

@@ -1,6 +1,8 @@
 SCRIPT_PATH="${BASH_SOURCE[0]:-$0}";
 cd "$( dirname -- "$SCRIPT_PATH"; )";
 
+clear
+
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     echo "This file must be sourced in the terminal with . ${0} instead of calling it"
     exit
