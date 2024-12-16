@@ -6,7 +6,7 @@ swarm_backbone_switch_port = 510
 default_wlan_interface = 'wlan0'
 default_ethernet_device = 'eth0'
 
-this_ap_id = 'AP:004'
+# this_ap_id = 'AP:004'
 
 REDIS_PORT = 6379
 CASSANDRA_PORT = 9402

@@ -40,7 +40,7 @@ export NUMID=$2
 
 BACKBONE_IP=$(nextip $BACKBONE_SUBNET $NUMID)
 SWARM_IP=$(nextip $SWARM_SUBNET $NUMID)
-
+l0_ip=$(nextip 127.1.0.0 $NUMID)
 
 # Genereate the MAC address for the node
 oldMAC=00:00:00:00:00:00
@@ -87,6 +87,7 @@ case $ROLE in
 # Access Point: 
     ap)
     echo "Role is set as Access Point"
+    sudo ifconfig lo:0 $l0_ip netmask 255.255.255.255 up
     if  nmcli connection show | grep -q 'SmartEdgeHotspot'; then
         echo -e "Connection SmartEdgeHotspot exists: starting wifi hotspot"
         sudo nmcli con up SmartEdgeHotspot
@@ -106,6 +107,7 @@ case $ROLE in
     ;;
 # Smart Node
     sn)
+    sudo ifconfig lo:0 $l0_ip netmask 255.255.255.255 up
     sudo python ./node_manager/node_manager.py
     ;;
 

@@ -6,11 +6,12 @@ import lib.global_config as global_config
 # Currently only using last byte of lo:0 as an ID
 # This can be configured for example using:
 # ifconfig lo:0 127.0.1.1 netmask 255.255.255.255 up
-# loopback_if = 'lo:0'
-# loopback_id = psutil.net_if_addrs()[loopback_if][0][1].split('.')
-# this_ap_id = f'AP:{int(loopback_id[3]):03}'
 
-this_ap_id = global_config.this_ap_id
+loopback_if = 'lo:0'
+loopback_id = psutil.net_if_addrs()[loopback_if][0][1].split('.')
+this_ap_id = f'AP:{int(loopback_id[3]):03}'
+
+# this_ap_id = global_config.this_ap_id
 
 # This a P4 switch port number for forwardign packets to other APs
 # over the backbone network
