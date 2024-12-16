@@ -3,3 +3,4 @@ __pycache__
 video_demo
 .vscode
 p4jet.tar.gz
+*.log

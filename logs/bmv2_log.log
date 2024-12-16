@@ -1,4 +1,4 @@
-Line:41 at 2024-12-16 19:25:33,417 [DEBUG]: 
+Line:41 at 2024-12-16 20:31:09,486 [DEBUG]: 
 Response from bmv2 for sending command:
 reset_state
 is:
@@ -7,7 +7,7 @@ Done
 Control utility for runtime P4 table manipulation
 RuntimeCmd: RuntimeCmd: 
 
-Line:41 at 2024-12-16 19:25:33,603 [DEBUG]: 
+Line:41 at 2024-12-16 20:31:09,639 [DEBUG]: 
 Response from bmv2 for sending command:
 port_add smartedge_bb 510
 is:
@@ -16,4 +16,486 @@ Done
 Control utility for runtime P4 table manipulation
 RuntimeCmd: Invalid device manager operation (ERROR)
 RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:46,330 [DEBUG]: 
+Response from bmv2 for sending command:
+port_remove 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:46,526 [DEBUG]: 
+Response from bmv2 for sending command:
+port_add vxlan3 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:46,692 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:46,845 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_ipv4_lpm MyIngress.ac_ipv4_forward 192.168.10.3/32 => 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        00:03
+Entry has been added with handle 0
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:31:46,845 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        00:03
+Entry has been added with handle 0
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:31:46,845 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:31:46,999 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:47,143 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_l2_forward ac_l2_forward 00:00:c0:a8:0a:03 => 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        00:03
+Entry has been added with handle 0
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:31:47,143 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        00:03
+Entry has been added with handle 0
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:31:47,143 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:31:47,292 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:47,447 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_ipv4_lpm MyIngress.ac_ipv4_forward 192.168.10.3/32 => 510
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        01:fe
+Entry has been added with handle 33554433
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:31:47,448 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        01:fe
+Entry has been added with handle 33554433
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:31:47,448 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:31:47,599 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:31:47,762 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_l2_forward ac_l2_forward 00:00:c0:a8:0a:03 => 510
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        01:fe
+Entry has been added with handle 33554433
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:31:47,762 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        01:fe
+Entry has been added with handle 33554433
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:31:47,762 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:45:54,122 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x0
+Match key:
+* ipv4.dstIP          : LPM       c0a80a03/32
+Action entry: MyIngress.ac_ipv4_forward - 03
+RuntimeCmd: 
+
+Line:79 at 2024-12-16 20:45:54,122 [DEBUG]: getting entry handle from bmv2 for: 192.168.10.3/32
+ Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x0
+Match key:
+* ipv4.dstIP          : LPM       c0a80a03/32
+Action entry: MyIngress.ac_ipv4_forward - 03
+RuntimeCmd: 
+
+Line:83 at 2024-12-16 20:45:54,123 [DEBUG]: handle is: 0 
+
+Line:41 at 2024-12-16 20:45:54,280 [DEBUG]: 
+Response from bmv2 for sending command:
+table_delete MyIngress.tb_ipv4_lpm 0
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Deleting entry 0 from MyIngress.tb_ipv4_lpm
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:45:54,425 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x0
+Match key:
+* ethernet.dstMac     : EXACT     0000c0a80a03
+Action entry: MyIngress.ac_l2_forward - 03
+RuntimeCmd: 
+
+Line:79 at 2024-12-16 20:45:54,425 [DEBUG]: getting entry handle from bmv2 for: 00:00:c0:a8:0a:03
+ Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x0
+Match key:
+* ethernet.dstMac     : EXACT     0000c0a80a03
+Action entry: MyIngress.ac_l2_forward - 03
+RuntimeCmd: 
+
+Line:83 at 2024-12-16 20:45:54,425 [DEBUG]: handle is: 0 
+
+Line:41 at 2024-12-16 20:45:54,583 [DEBUG]: 
+Response from bmv2 for sending command:
+table_delete MyIngress.tb_l2_forward 0
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Deleting entry 0 from MyIngress.tb_l2_forward
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:45:54,734 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x2000001
+Match key:
+* ipv4.dstIP          : LPM       c0a80a03/32
+Action entry: MyIngress.ac_ipv4_forward - 01fe
+RuntimeCmd: 
+
+Line:79 at 2024-12-16 20:45:54,735 [DEBUG]: getting entry handle from bmv2 for: 192.168.10.3/32
+ Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x2000001
+Match key:
+* ipv4.dstIP          : LPM       c0a80a03/32
+Action entry: MyIngress.ac_ipv4_forward - 01fe
+RuntimeCmd: 
+
+Line:83 at 2024-12-16 20:45:54,735 [DEBUG]: handle is: 33554433 
+
+Line:41 at 2024-12-16 20:45:54,896 [DEBUG]: 
+Response from bmv2 for sending command:
+table_delete MyIngress.tb_ipv4_lpm 33554433
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Deleting entry 33554433 from MyIngress.tb_ipv4_lpm
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:45:55,051 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x2000001
+Match key:
+* ethernet.dstMac     : EXACT     0000c0a80a03
+Action entry: MyIngress.ac_l2_forward - 01fe
+RuntimeCmd: 
+
+Line:79 at 2024-12-16 20:45:55,051 [DEBUG]: getting entry handle from bmv2 for: 00:00:c0:a8:0a:03
+ Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Dumping entry 0x2000001
+Match key:
+* ethernet.dstMac     : EXACT     0000c0a80a03
+Action entry: MyIngress.ac_l2_forward - 01fe
+RuntimeCmd: 
+
+Line:83 at 2024-12-16 20:45:55,051 [DEBUG]: handle is: 33554433 
+
+Line:41 at 2024-12-16 20:45:55,199 [DEBUG]: 
+Response from bmv2 for sending command:
+table_delete MyIngress.tb_l2_forward 33554433
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Deleting entry 33554433 from MyIngress.tb_l2_forward
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:45:55,378 [DEBUG]: 
+Response from bmv2 for sending command:
+port_remove 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:45,825 [DEBUG]: 
+Response from bmv2 for sending command:
+port_remove 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid device manager operation (ERROR)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:46,014 [DEBUG]: 
+Response from bmv2 for sending command:
+port_add vxlan3 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:46,218 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:46,377 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_ipv4_lpm MyIngress.ac_ipv4_forward 192.168.10.3/32 => 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        00:03
+Entry has been added with handle 33554432
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:46:46,377 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        00:03
+Entry has been added with handle 33554432
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:46:46,377 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:46:46,536 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:46,711 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_l2_forward ac_l2_forward 00:00:c0:a8:0a:03 => 3
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        00:03
+Entry has been added with handle 33554432
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:46:46,711 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        00:03
+Entry has been added with handle 33554432
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:46:46,711 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:46:46,872 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_ipv4_lpm 192.168.10.3/32
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:47,024 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_ipv4_lpm MyIngress.ac_ipv4_forward 192.168.10.3/32 => 510
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        01:fe
+Entry has been added with handle 67108865
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:46:47,025 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to lpm match table MyIngress.tb_ipv4_lpm
+match key:           LPM-c0:a8:0a:03/32
+action:              MyIngress.ac_ipv4_forward
+runtime data:        01:fe
+Entry has been added with handle 67108865
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:46:47,025 [DEBUG]: add entry with handle 0  
+
+Line:41 at 2024-12-16 20:46:47,178 [DEBUG]: 
+Response from bmv2 for sending command:
+table_dump_entry_from_key MyIngress.tb_l2_forward 00:00:c0:a8:0a:03
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid table operation (BAD_MATCH_KEY)
+RuntimeCmd: 
+
+Line:41 at 2024-12-16 20:46:47,332 [DEBUG]: 
+Response from bmv2 for sending command:
+table_add MyIngress.tb_l2_forward ac_l2_forward 00:00:c0:a8:0a:03 => 510
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        01:fe
+Entry has been added with handle 67108865
+RuntimeCmd: 
+
+Line:53 at 2024-12-16 20:46:47,333 [DEBUG]: 
+response received: Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table MyIngress.tb_l2_forward
+match key:           EXACT-00:00:c0:a8:0a:03
+action:              ac_l2_forward
+runtime data:        01:fe
+Entry has been added with handle 67108865
+RuntimeCmd: 
+
+Line:63 at 2024-12-16 20:46:47,333 [DEBUG]: add entry with handle 0  
 

@@ -46,4 +46,4 @@ default_thrift_port = 9090
 # list of access points in the network, used to propagate configuration changes
 # this list of IPs and MACs are the ones configured on the smartedge-bb on each access point
 
-the_other_ap = '10.30.2.131'
+the_other_ap = '10.30.2.189'
