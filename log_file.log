@@ -1,95 +1,98 @@
-Line:106 at 2024-12-16 20:31:09,640 [INFO]: Program Initialized Successfully 
+Line:108 at 2024-12-16 21:09:39,723 [INFO]: Program Initialized Successfully 
 
-Line:343 at 2024-12-16 20:31:34,436 [DEBUG]: 
-output_line: wlan0: del station 2c:cf:67:28:6b:62
+Line:345 at 2024-12-16 21:09:43,042 [DEBUG]: 
+output_line: wlan0: new station 2c:cf:67:28:6b:8c
  
 
-Line:354 at 2024-12-16 20:31:34,437 [INFO]: 
-Disconnected Station MAC: 2c:cf:67:28:6b:62 
+Line:349 at 2024-12-16 21:09:43,042 [INFO]: 
+New Station MAC: 2c:cf:67:28:6b:8c 
 
-Line:283 at 2024-12-16 20:31:34,437 [WARNING]: 
-Station 2c:cf:67:28:6b:62 disconnected from AP but was not found in connected stations 
+Line:218 at 2024-12-16 21:09:43,150 [INFO]: 
+Handling New Station: 2c:cf:67:28:6b:8c 	 10.42.0.70 at 1734379783.1509414 
 
-Line:343 at 2024-12-16 20:31:46,103 [DEBUG]: 
-output_line: wlan0: new station 2c:cf:67:28:6b:62
- 
-
-Line:347 at 2024-12-16 20:31:46,103 [INFO]: 
-New Station MAC: 2c:cf:67:28:6b:62 
-
-Line:216 at 2024-12-16 20:31:46,105 [INFO]: 
-Handling New Station: 2c:cf:67:28:6b:62 	 10.42.0.28 at 1734377506.1053975 
-
-Line:196 at 2024-12-16 20:31:46,113 [DEBUG]: 
+Line:198 at 2024-12-16 21:09:43,156 [DEBUG]: 
 Station's Virtual IP: 192.168.10.3 
 
-Line:197 at 2024-12-16 20:31:46,113 [DEBUG]: 
+Line:199 at 2024-12-16 21:09:43,156 [DEBUG]: 
 Station's Virtual MAC: 00:00:c0:a8:0a:03 
 
-Line:226 at 2024-12-16 20:31:46,113 [INFO]: 
-Station 2c:cf:67:28:6b:62	10.42.0.28
+Line:228 at 2024-12-16 21:09:43,157 [INFO]: 
+Station 2c:cf:67:28:6b:8c	10.42.0.70
 	assigned vIP: 192.168.10.3 and vMAC: 00:00:c0:a8:0a:03 
 
-Line:143 at 2024-12-16 20:31:46,114 [DEBUG]: Adding vxlan3 
+Line:145 at 2024-12-16 21:09:43,157 [DEBUG]: Adding vxlan3 
 
-Line:150 at 2024-12-16 20:31:46,116 [DEBUG]: 
+Line:152 at 2024-12-16 21:09:43,159 [DEBUG]: 
 Creating vxlan 3:   
 
-Line:152 at 2024-12-16 20:31:46,116 [DEBUG]: 
+Line:154 at 2024-12-16 21:09:43,159 [DEBUG]: 
 Created host IDs: {3, '510'} 
 
-Line:245 at 2024-12-16 20:31:46,530 [INFO]: station: 00:00:c0:a8:0a:03 192.168.10.3 joined AP AP:004 at 1734377506.530632 
+Line:247 at 2024-12-16 21:09:43,601 [INFO]: station: 00:00:c0:a8:0a:03 192.168.10.3 joined AP AP:004 at 1734379783.6012406 
 
-Line:343 at 2024-12-16 20:45:53,957 [DEBUG]: 
-output_line: wlan0: del station 2c:cf:67:28:6b:62
+Line:345 at 2024-12-16 21:09:50,522 [DEBUG]: 
+output_line: wlan0: del station 2c:cf:67:28:6b:8c
  
 
-Line:354 at 2024-12-16 20:45:53,957 [INFO]: 
-Disconnected Station MAC: 2c:cf:67:28:6b:62 
+Line:356 at 2024-12-16 21:09:50,522 [INFO]: 
+Disconnected Station MAC: 2c:cf:67:28:6b:8c 
 
-Line:323 at 2024-12-16 20:45:55,384 [INFO]: station: 192.168.10.3 left AP AP:004 
+Line:325 at 2024-12-16 21:09:51,919 [INFO]: station: 192.168.10.3 left AP AP:004 
 
-Line:165 at 2024-12-16 20:45:55,385 [DEBUG]: 
+Line:167 at 2024-12-16 21:09:51,919 [DEBUG]: 
 Deleting vxlan ID: 3 
 
-Line:170 at 2024-12-16 20:45:55,417 [DEBUG]: 
+Line:172 at 2024-12-16 21:09:51,946 [DEBUG]: 
 Created host IDs: {'510'} 
 
-Line:343 at 2024-12-16 20:46:45,503 [DEBUG]: 
-output_line: wlan0: new station 2c:cf:67:28:6b:62
+Line:345 at 2024-12-16 21:10:19,799 [DEBUG]: 
+output_line: wlan0: new station 2c:cf:67:28:6b:8c
  
 
-Line:347 at 2024-12-16 20:46:45,503 [INFO]: 
-New Station MAC: 2c:cf:67:28:6b:62 
+Line:349 at 2024-12-16 21:10:19,800 [INFO]: 
+New Station MAC: 2c:cf:67:28:6b:8c 
 
-Line:216 at 2024-12-16 20:46:45,617 [INFO]: 
-Handling New Station: 2c:cf:67:28:6b:62 	 10.42.0.28 at 1734378405.6178434 
+Line:218 at 2024-12-16 21:10:19,801 [INFO]: 
+Handling New Station: 2c:cf:67:28:6b:8c 	 10.42.0.70 at 1734379819.8017814 
 
-Line:196 at 2024-12-16 20:46:45,622 [DEBUG]: 
+Line:198 at 2024-12-16 21:10:19,806 [DEBUG]: 
 Station's Virtual IP: 192.168.10.3 
 
-Line:197 at 2024-12-16 20:46:45,622 [DEBUG]: 
+Line:199 at 2024-12-16 21:10:19,806 [DEBUG]: 
 Station's Virtual MAC: 00:00:c0:a8:0a:03 
 
-Line:226 at 2024-12-16 20:46:45,622 [INFO]: 
-Station 2c:cf:67:28:6b:62	10.42.0.28
+Line:228 at 2024-12-16 21:10:19,807 [INFO]: 
+Station 2c:cf:67:28:6b:8c	10.42.0.70
 	assigned vIP: 192.168.10.3 and vMAC: 00:00:c0:a8:0a:03 
 
-Line:143 at 2024-12-16 20:46:45,623 [DEBUG]: Adding vxlan3 
+Line:145 at 2024-12-16 21:10:19,807 [DEBUG]: Adding vxlan3 
 
-Line:150 at 2024-12-16 20:46:45,626 [DEBUG]: 
+Line:152 at 2024-12-16 21:10:19,810 [DEBUG]: 
 Creating vxlan 3:   
 
-Line:152 at 2024-12-16 20:46:45,626 [DEBUG]: 
+Line:154 at 2024-12-16 21:10:19,810 [DEBUG]: 
 Created host IDs: {3, '510'} 
 
-Line:245 at 2024-12-16 20:46:46,020 [INFO]: station: 00:00:c0:a8:0a:03 192.168.10.3 joined AP AP:004 at 1734378406.0202014 
+Line:247 at 2024-12-16 21:10:20,232 [INFO]: station: 00:00:c0:a8:0a:03 192.168.10.3 joined AP AP:004 at 1734379820.2323823 
 
-Line:110 at 2024-12-16 20:47:08,516 [INFO]: Handling exit 
+Line:345 at 2024-12-16 21:10:32,024 [DEBUG]: 
+output_line: wlan0: del station 2c:cf:67:28:6b:8c
+ 
 
-Line:111 at 2024-12-16 20:47:08,516 [DEBUG]: Created vxlan ids: {3, '510'} 
+Line:356 at 2024-12-16 21:10:32,024 [INFO]: 
+Disconnected Station MAC: 2c:cf:67:28:6b:8c 
 
-Line:121 at 2024-12-16 20:47:08,549 [DEBUG]: deleted vxlan3, feedback , errors:  
+Line:325 at 2024-12-16 21:10:33,475 [INFO]: station: 192.168.10.3 left AP AP:004 
 
-Line:121 at 2024-12-16 20:47:08,572 [DEBUG]: deleted vxlan510, feedback , errors: Cannot find device "vxlan510" 
+Line:167 at 2024-12-16 21:10:33,475 [DEBUG]: 
+Deleting vxlan ID: 3 
+
+Line:172 at 2024-12-16 21:10:33,497 [DEBUG]: 
+Created host IDs: {'510'} 
+
+Line:112 at 2024-12-16 21:11:00,736 [INFO]: Handling exit 
+
+Line:113 at 2024-12-16 21:11:00,737 [DEBUG]: Created vxlan ids: {'510'} 
+
+Line:123 at 2024-12-16 21:11:00,746 [DEBUG]: deleted vxlan510, feedback , errors: Cannot find device "vxlan510" 
 

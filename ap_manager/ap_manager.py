@@ -97,6 +97,8 @@ def initialize_program():
     
     # remvoe all configureation from bmv2, start fresh
     bmv2.send_cli_command_to_bmv2(cli_command="reset_state")
+    shell_command = f"port_remove {global_config.swarm_backbone_switch_port}"
+    bmv2.send_cli_command_to_bmv2(cli_command=shell_command)
     shell_command = f"port_add smartedge-bb {global_config.swarm_backbone_switch_port}"
     bmv2.send_cli_command_to_bmv2(cli_command=shell_command)
     created_host_ids.add(f'{global_config.swarm_backbone_switch_port}')
