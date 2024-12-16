@@ -6,7 +6,7 @@ swarm_backbone_switch_port = 510
 default_wlan_interface = 'wlan0'
 default_ethernet_device = 'eth0'
 
-this_ap_id = 'AP:005'
+this_ap_id = 'AP:004'
 
 REDIS_PORT = 6379
 CASSANDRA_PORT = 9402
@@ -30,7 +30,7 @@ this_swarm_dhcp_end  = 200        # last IP to be assigned e.g: 192.168.10.200  
 
 
 # This is the ip and port number of the database
-database_hostname = '10.30.2.138'
+database_hostname = '0.0.0.0'
 database_port = 9042
 
 # this is a tcp port number used to reach the coordinator from the swarm nodes

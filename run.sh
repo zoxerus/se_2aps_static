@@ -79,19 +79,30 @@ case $ROLE in
     echo "Role is set to Coordinator"
     sudo ip link add smartedge-bb type vxlan id 1000 dev eth0 group 239.255.1.1 dstport 4789
     sudo ip link set dev smartedge-bb address $macnew
-    sudo ip address add $BACKBONE_IP$BACKBONE_MASK dev smartedge-bb
-    sudo ip address add $SWARM_IP$SWARM_SUBNET_MASK dev smartedge-bb
+    sudo ip address add ${BACKBONE_IP}${BACKBONE_MASK} dev smartedge-bb
+    sudo ip address add ${SWARM_IP}${SWARM_SUBNET_MASK} dev smartedge-bb
     sudo ip link set dev smartedge-bb up
     sudo python ./coordinator/coordinator.py
     ;;
 
     ap)
     echo "Role is set as Access Point"
+    if  nmcli connection show | grep -q 'SmartEdgeHotspot'; then
+        echo -e "Connection SmartEdgeHotspot exists: starting wifi hotspot"
+        sudo nmcli con up SmartEdgeHotspot
+    else
+        echo -e "Connection SmartEdgeHotspot does not exists: \n\tcreating connection and starting wifi hotspot"
+        sudo nmcli con add type wifi ifname wlan0 con-name SmartEdgeHotspot autoconnect yes ssid R${NUMID}AP
+        sudo nmcli con modify SmartEdgeHotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared
+        sudo nmcli con modify SmartEdgeHotspot wifi-sec.key-mgmt wpa-psk
+        sudo nmcli con modify SmartEdgeHotspot wifi-sec.psk "123456123"
+        sudo nmcli con up SmartEdgeHotspot
+    fi
     sudo ip link add smartedge-bb type vxlan id 1000 dev eth0 group 239.255.1.1 dstport 4789
     sudo ip link set dev smartedge-bb address $macnew
     sudo ip address add $BACKBONE_IP dev smartedge-bb
     sudo ip link set dev smartedge-bb up
-    sudo python ./ap_manager/client_monitor/ap_manager.py
+    sudo python ./ap_manager/ap_manager.py
     ;;
 
     nd)

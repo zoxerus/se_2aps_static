@@ -93,3 +93,8 @@ def init_database(host, port):
 
 def main():
     init_database(CASSANDRA_HOST, CASSANDRA_DEFAULT_PORT)
+    print('done')
+
+
+if __name__ == '__main__':
+    main()

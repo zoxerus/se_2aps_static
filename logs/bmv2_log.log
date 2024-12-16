@@ -1,0 +1,19 @@
+Line:41 at 2024-12-16 15:23:57,514 [DEBUG]: 
+Response from bmv2 for sending command:
+reset_state
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: RuntimeCmd: 
+
+Line:41 at 2024-12-16 15:23:57,684 [DEBUG]: 
+Response from bmv2 for sending command:
+port_add vxlan_backbone 510
+is:
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Invalid device manager operation (ERROR)
+RuntimeCmd: 
+

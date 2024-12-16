@@ -1,6 +1,7 @@
 # This tells python to look for files in parent folders
 import sys
 # setting path
+sys.path.append('.')
 sys.path.append('..')
 sys.path.append('../..')
 
@@ -96,11 +97,7 @@ def initialize_program():
     
     # remvoe all configureation from bmv2, start fresh
     bmv2.send_cli_command_to_bmv2(cli_command="reset_state")
-    shell_command = f'sudo ip link add vxlan_backbone type vxlan id 2000 remote {global_config.the_other_ap} dstport 4789'
-    subprocess.run(shell_command.split(), text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
-    shell_command = f'sudo ip link set vxlan_backbone up'
-    subprocess.run(shell_command.split(), text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
-    shell_command = f"port_add vxlan_backbone {global_config.swarm_backbone_switch_port}"
+    shell_command = f"port_add smartedge_bb {global_config.swarm_backbone_switch_port}"
     bmv2.send_cli_command_to_bmv2(cli_command=shell_command)
     created_host_ids.add(f'{global_config.swarm_backbone_switch_port}')
     

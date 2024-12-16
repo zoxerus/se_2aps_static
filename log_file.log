@@ -1,0 +1,8 @@
+Line:110 at 2024-12-16 15:23:57,684 [INFO]: Program Initialized Successfully 
+
+Line:114 at 2024-12-16 15:24:03,680 [INFO]: Handling exit 
+
+Line:115 at 2024-12-16 15:24:03,680 [DEBUG]: Created vxlan ids: {'510'} 
+
+Line:125 at 2024-12-16 15:24:03,690 [DEBUG]: deleted vxlan510, feedback , errors: Cannot find device "vxlan510" 
+
