@@ -1,4 +1,4 @@
-Line:41 at 2024-12-16 15:23:57,514 [DEBUG]: 
+Line:41 at 2024-12-16 19:25:33,417 [DEBUG]: 
 Response from bmv2 for sending command:
 reset_state
 is:
@@ -7,9 +7,9 @@ Done
 Control utility for runtime P4 table manipulation
 RuntimeCmd: RuntimeCmd: 
 
-Line:41 at 2024-12-16 15:23:57,684 [DEBUG]: 
+Line:41 at 2024-12-16 19:25:33,603 [DEBUG]: 
 Response from bmv2 for sending command:
-port_add vxlan_backbone 510
+port_add smartedge_bb 510
 is:
 Obtaining JSON from switch...
 Done

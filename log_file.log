@@ -1,8 +1,27 @@
-Line:110 at 2024-12-16 15:23:57,684 [INFO]: Program Initialized Successfully 
+Line:106 at 2024-12-16 19:25:33,603 [INFO]: Program Initialized Successfully 
 
-Line:114 at 2024-12-16 15:24:03,680 [INFO]: Handling exit 
+Line:343 at 2024-12-16 19:25:42,444 [DEBUG]: 
+output_line: wlan0: new station 2c:cf:67:28:6b:62
+ 
 
-Line:115 at 2024-12-16 15:24:03,680 [DEBUG]: Created vxlan ids: {'510'} 
+Line:347 at 2024-12-16 19:25:42,445 [INFO]: 
+New Station MAC: 2c:cf:67:28:6b:62 
 
-Line:125 at 2024-12-16 15:24:03,690 [DEBUG]: deleted vxlan510, feedback , errors: Cannot find device "vxlan510" 
+Line:213 at 2024-12-16 19:25:47,445 [ERROR]: Error: Could not get Node Physical IP from ARP table for MAC: 2c:cf:67:28:6b:62 
+
+Line:343 at 2024-12-16 20:06:31,755 [DEBUG]: 
+output_line: wlan0: del station 2c:cf:67:28:6b:62
+ 
+
+Line:354 at 2024-12-16 20:06:31,755 [INFO]: 
+Disconnected Station MAC: 2c:cf:67:28:6b:62 
+
+Line:283 at 2024-12-16 20:06:31,755 [WARNING]: 
+Station 2c:cf:67:28:6b:62 disconnected from AP but was not found in connected stations 
+
+Line:110 at 2024-12-16 20:26:28,803 [INFO]: Handling exit 
+
+Line:111 at 2024-12-16 20:26:28,804 [DEBUG]: Created vxlan ids: {'510'} 
+
+Line:121 at 2024-12-16 20:26:28,814 [DEBUG]: deleted vxlan510, feedback , errors: Cannot find device "vxlan510" 
 

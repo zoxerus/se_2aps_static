@@ -43,7 +43,7 @@ SWARM_IP=$(nextip $SWARM_SUBNET $NUMID)
 
 
 # Genereate the MAC address for the node
-oldMAC = 00:00:00:00:00:00
+oldMAC=00:00:00:00:00:00
 mac=$(echo $oldMAC | tr -d ':')
 macadd=$(( 0x$mac + $NUMID ))
 macnew=$(printf "%012x" $macadd | sed 's/../&:/g;s/:$//')
@@ -62,7 +62,7 @@ if [ $INVENV -eq "0" ]; then
     else 
         python -m venv .venv
         . ./.venv/bin/activate
-        pip install aenum cassandra-driver
+        pip install aenum cassandra-driver psutil
     fi
     source ~/.bashrc
     alias python='$VIRTUAL_ENV/bin/python'
@@ -74,7 +74,7 @@ fi
 
 
 case $ROLE in
-
+# Coordinator:
     co)
     echo "Role is set to Coordinator"
     sudo ip link add smartedge-bb type vxlan id 1000 dev eth0 group 239.255.1.1 dstport 4789
@@ -84,7 +84,7 @@ case $ROLE in
     sudo ip link set dev smartedge-bb up
     sudo python ./coordinator/coordinator.py
     ;;
-
+# Access Point: 
     ap)
     echo "Role is set as Access Point"
     if  nmcli connection show | grep -q 'SmartEdgeHotspot'; then
@@ -104,9 +104,9 @@ case $ROLE in
     sudo ip link set dev smartedge-bb up
     sudo python ./ap_manager/ap_manager.py
     ;;
-
-    nd)
-    echo "nd"
+# Smart Node
+    sn)
+    sudo python ./node_manager/node_manager.py
     ;;
 
 
